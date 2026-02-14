@@ -34,7 +34,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddHostedService<LetsEncryptRenewalService>();
+//builder.Services.AddHostedService<LetsEncryptRenewalService>();
 
 // Configure Kestrel
 builder.WebHost.ConfigureKestrel(options =>

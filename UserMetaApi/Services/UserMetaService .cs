@@ -59,6 +59,7 @@ namespace UserMetaApi.Services
         {
             try
             {
+                return "";
                 using var reader = new DatabaseReader("/app/GeoLite2-Country.mmdb");
                 var response = reader.Country(ip);
                 return response.Country.Name;
