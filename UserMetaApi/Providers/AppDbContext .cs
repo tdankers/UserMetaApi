@@ -1,9 +1,6 @@
-﻿using BBT.EntityFrameworkCore;
-using BbtEntities.Models;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Runtime.Intrinsics.X86;
+
 
 //in master
 //CREATE LOGIN xxxxx 
@@ -41,7 +38,7 @@ using System.Runtime.Intrinsics.X86;
 
 namespace UserMetaApi.Providers
 {
-    public class AppDbContext : DbContextBBT
+    public class AppDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

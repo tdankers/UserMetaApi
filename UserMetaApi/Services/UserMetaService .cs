@@ -1,5 +1,4 @@
-﻿using BbtEntities.Models;
-using MaxMind.GeoIP2;
+﻿using MaxMind.GeoIP2;
 using Microsoft.EntityFrameworkCore;
 using UserMetaApi.Interfaces;
 using UserMetaApi.Providers;

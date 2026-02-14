@@ -1,6 +1,4 @@
-﻿using BbtEntities.Models;
-
-namespace UserMetaApi.Interfaces
+﻿namespace UserMetaApi.Interfaces
 {
 
     public interface IUserMetaService
