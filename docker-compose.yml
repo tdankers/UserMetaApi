@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  usermetaapi:
+    build:
+      context: .
+      dockerfile: UserMetaApi/Dockerfile
+    container_name: usermetaapi
+    ports:
+      - "8080:80"
+      - "8181:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - SQL_USERNAME= WebInsertUser
+      - SQL_PASSWORD= hdk%lhksdhwe&4niqq12f9shflk
+      - SQL_CATALOG= unitadministration_develop
+      - SQL_SOURCE= dev-bbtunitadministration.database.windows.net,1433
+      - DOMAIN=  meta-dev.bbt-virtual-net.eu
+      - EMAIL= taco.dankers@batterybasedtrading.com
+    volumes:
+      - ./certs:/app/certs
+      - ./wwwroot:/app/wwwroot
+    restart: unless-stopped
+    networks:
+      - usermetaapi-network
+
+networks:
+  usermetaapi-network:
+    driver: bridge
