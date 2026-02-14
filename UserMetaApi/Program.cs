@@ -5,12 +5,27 @@ using UserMetaApi.Services;
 using UserMetaApi.Workers;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>();
 
 var domain = Environment.GetEnvironmentVariable("DOMAIN") ?? "";
 var email = Environment.GetEnvironmentVariable("EMAIL") ?? "";
+
+// Configure Forwarded Headers to read real client IP
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    
+    // Trust all proxies (Docker networks, reverse proxies, etc.)
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+    
+    // Allow forwarded headers from any source
+    // In production, consider restricting this to known proxy IPs
+});
 
 // Add services to the container.
 builder.Services.AddScoped<IUserMetaService, UserMetaService>();
@@ -55,6 +70,9 @@ builder.WebHost.ConfigureKestrel(options =>
 
 var app = builder.Build();
 
+// IMPORTANT: Add Forwarded Headers Middleware FIRST (before other middleware)
+app.UseForwardedHeaders();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -80,3 +98,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
